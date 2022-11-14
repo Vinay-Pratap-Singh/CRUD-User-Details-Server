@@ -2,11 +2,7 @@ const express = require("express");
 const router = express.Router();
 const user = require("../model/userSchema");
 
-router.get("/", (req, res) => {
-  res.send("Add User Route");
-});
-
-router.post("/", async (req, res) => {
+router.post("/adduser", async (req, res) => {
   try {
     const { name, email, phone, password, cpassword } = await req.body;
     const emailExist = await user.findOne({ email: email });

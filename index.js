@@ -10,13 +10,12 @@ app.use(express.urlencoded({ extended: true }));
 require("./database/connect");
 const port = process.env.PORT || 5000;
 
-
 // importing all my routes here
 const adduser = require("./routes/adduser");
-app.use("/",adduser);
+const displayuser = require("./routes/displayuser");
 
-
-
+app.use("/", adduser);
+app.use("/", displayuser);
 
 // listening the app
 app.listen(port, () => {
