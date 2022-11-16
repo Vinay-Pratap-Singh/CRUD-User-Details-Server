@@ -11,11 +11,9 @@ require("./database/connect");
 const port = process.env.PORT || 5000;
 
 // importing all my routes here
-const adduser = require("./routes/adduser");
-const displayuser = require("./routes/displayuser");
+const user = require("./routes/userRoute");
 
-app.use("/", adduser);
-app.use("/", displayuser);
+app.use("/", user);
 
 // listening the app
 app.listen(port, () => {

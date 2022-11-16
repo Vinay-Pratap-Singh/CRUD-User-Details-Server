@@ -1,8 +1,7 @@
-const express = require("express");
-const router = express.Router();
 const user = require("../model/userSchema");
 
-router.post("/adduser", async (req, res) => {
+// add user controller
+exports.addUser = async (req, res) => {
   try {
     const { name, email, phone, password, cpassword } = await req.body;
     const emailExist = await user.findOne({ email: email });
@@ -41,6 +40,31 @@ router.post("/adduser", async (req, res) => {
       res.send("User added sucessfully");
     }
   } catch (error) {}
-});
+};
 
-module.exports = router;
+// display user controller
+exports.displayUser = async (req, res) => {
+  const data = await user.find();
+  // converting the data into the json format
+  res.send(JSON.stringify(data));
+};
+
+// delete the user
+exports.deleteUser=async (req, res) => {
+  try {
+    const { email } = await req.body;
+    // checking that the email exists or not
+    const checkEmail = await user.findOne({email});
+    if (checkEmail) {
+      user.deleteOne({ email: email }, (err) => {
+        if(err) console.log(err);
+      })
+      res.send("User deleted sucessfully");
+    }
+    else {
+      res.send("User does not exist");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
