@@ -1,11 +1,12 @@
 const express = require("express");
-const { addUser, displayUser, deleteUser } = require("../controller/userController");
+const { addUser, displayUser, deleteUser, updateUser } = require("../controller/userController");
 const router = express.Router();
-const user = require("../model/userSchema");
 
 router.post("/adduser", addUser);
 
 router.post("/displayuser", displayUser);
 
 router.post("/deleteuser", deleteUser);
+
+router.post("/updateuser", updateUser);
 module.exports = router;

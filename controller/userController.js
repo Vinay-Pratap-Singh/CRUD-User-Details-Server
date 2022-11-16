@@ -50,21 +50,39 @@ exports.displayUser = async (req, res) => {
 };
 
 // delete the user
-exports.deleteUser=async (req, res) => {
+exports.deleteUser = async (req, res) => {
   try {
     const { email } = await req.body;
-    // checking that the email exists or not
-    const checkEmail = await user.findOne({email});
-    if (checkEmail) {
-      user.deleteOne({ email: email }, (err) => {
-        if(err) console.log(err);
-      })
-      res.send("User deleted sucessfully");
+
+    const deletedUser = await user.findOneAndDelete({ email });
+    if (deletedUser) {
+      res.send("User deleted\n",deletedUser);
     }
     else {
-      res.send("User does not exist");
+      res.send("User not found");
+    }
+
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// update the user
+exports.updateUser = async (req, res) => {
+  try {
+    const { name, email, phone, password, cpassword } = req.body;
+    
+    const updatedUser = await user.findOneAndUpdate({ email }, {
+      name, email, phone, password, cpassword
+    })
+
+    if (updatedUser) {
+      res.send("User updated sucessfully");
+    }
+    else {
+      res.send("User not found");
     }
   } catch (error) {
     console.log(error);
   }
-}
+};
