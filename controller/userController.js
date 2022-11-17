@@ -56,7 +56,7 @@ exports.deleteUser = async (req, res) => {
 
     const deletedUser = await user.findOneAndDelete({ email });
     if (deletedUser) {
-      res.send("User deleted\n",deletedUser);
+      res.send("User deleted");
     }
     else {
       res.send("User not found");
